@@ -1,4 +1,4 @@
-import {ModuleWithProviders} from '@angular/core';
+//import {ModuleWithProviders} from '@angular/core';
 //import {URLSearchParams} from '@angular/http';
 import {Routes, RouterModule} from '@angular/router';
 

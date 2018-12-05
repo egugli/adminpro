@@ -16,6 +16,7 @@ import { RegisterComponent } from './login/register.component';
 
 //Servicioa
 import { ServiceModule } from './services/service.module';
+
 //import { ImagenPipe } from './pipes/imagen.pipe';
 //import { IncrementadorComponent } from './components/incrementador/incrementador.component';
 

@@ -20,17 +20,17 @@ export class UsuarioService {
       public _subirArchivoService: SubirArchivoService
        ) {
       this.cargarStorage();
-  	console.log('Servicio de usuario listo');
+//  	console.log('Servicio de usuario listo');
    }
 
    estaLogueado(){
-     console.log('esta logueado?' + this.token);
+//     console.log('esta logueado?' + this.token);
      if (this.token.length > 5){
-       console.log('mayor 5'+ this.token.length);
+//       console.log('mayor 5'+ this.token.length);
        return true;
      }
       else {
-        console.log('menos 5' + this.token.length);
+//        console.log('menos 5' + this.token.length);
        return false;
      }
      //return (this.token.length > 5)? true : false;
@@ -116,8 +116,10 @@ console.log('entro cargar');
        return this.http.put( url, usuario )
              .map( (resp: any) => {
                  //this.usuario = resp.usuario;
-                 let usuarioDB: Usuario = resp.usuario;
-                 this.guardarStorage( usuarioDB._id, this.token, usuarioDB);
+                 if(usuario._id === this.usuario._id) {
+                   let usuarioDB: Usuario = resp.usuario;
+                   this.guardarStorage( usuarioDB._id, this.token, usuarioDB);
+                 }
                  swal('Usuario actualizado', usuario.nombre, 'success');
 
                  return true;
@@ -142,4 +144,32 @@ console.log('entro cargar');
 
   }
 
+  cargarUsuarios( desde: number = 0){
+
+      let url = URL_SERVICIOS + '/usuario?desde=' + desde;
+
+      return this.http.get( url );
+  }
+
+  buscarUsuarios( termino: string ){
+
+      let url = URL_SERVICIOS + '/busqueda/coleccion/usuarios/' + termino;
+
+      return this.http.get( url )
+        .map((resp: any) => resp.usuarios);
+  }
+
+  borrarUsuario( id: string ){
+
+      let url = URL_SERVICIOS + '/usuario/' +id;
+
+      url += '?token=' + this.token;
+console.log(url);
+      return this.http.delete ( url )
+          .map(resp => {
+            swal('Usuario borrado', 'El usuario a sido eliminado correctamente', 'success');
+            return true;
+          });
+
+  }
 }
